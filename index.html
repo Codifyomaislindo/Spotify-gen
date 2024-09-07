@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gerador de Links Spotify</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #1db954;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    header {
+      background-color: #191414;
+      padding: 20px;
+      width: 100%;
+      text-align: center;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+    }
+
+    main {
+      background-color: #121212;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      width: 100%;
+      max-width: 600px;
+      text-align: center;
+    }
+
+    .input-container {
+      margin-bottom: 20px;
+    }
+
+    .input-container label {
+      font-size: 1.2rem;
+    }
+
+    input[type="number"] {
+      padding: 10px;
+      margin: 10px 0;
+      width: 100%;
+      border-radius: 5px;
+      border: none;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #1db954;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #14833b;
+    }
+
+    .output-container {
+      margin-top: 20px;
+    }
+
+    #generatedLinks a {
+      display: block;
+      color: #1db954;
+      text-decoration: none;
+      margin-bottom: 5px;
+    }
+
+    footer {
+      margin-top: 20px;
+      font-size: 0.9rem;
+    }
+
+    footer a {
+      color: white;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Gerador de Códigos Spotify</h1>
+  </header>
+
+  <main>
+    <div class="input-container">
+      <label for="numCodes">Quantos códigos de Spotify você gostaria de gerar?</label>
+      <input type="number" id="numCodes" min="1" placeholder="Digite um número">
+      <button id="generateBtn">Gerar Códigos</button>
+    </div>
+
+    <div class="output-container">
+      <h2>Códigos Gerados:</h2>
+      <div id="generatedLinks"></div>
+    </div>
+  </main>
+
+  <footer>
+    <p>Feito por Kqzm</p>
+  </footer>
+
+  <script>
+    // Função para gerar uma string aleatória
+    function generateRandomString(length) {
+      const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let code = '';
+      for (let i = 0; i < length; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        code += characters[randomIndex];
+      }
+      return code;
+    }
+
+    // Função para gerar e exibir os códigos de Spotify
+    function generateSpotifyCodes() {
+      const numCodes = document.getElementById('numCodes').value;
+      const generatedLinksContainer = document.getElementById('generatedLinks');
+
+      // Limpa a área de resultados anteriores
+      generatedLinksContainer.innerHTML = '';
+
+      if (numCodes <= 0 || isNaN(numCodes)) {
+        alert('Por favor, insira um número válido.');
+        return;
+      }
+
+      // Gera os códigos e cria as URLs
+      for (let i = 0; i < numCodes; i++) {
+        const code = generateRandomString(10);
+        const url = `https://www.spotify.com/br-pt/ppt/microsoft/?code=${code}`;
+
+        // Cria um elemento <a> para exibir cada link gerado
+        const linkElement = document.createElement('a');
+        linkElement.href = url;
+        linkElement.textContent = url;
+        linkElement.target = '_blank';
+
+        // Adiciona o link à área de resultados
+        generatedLinksContainer.appendChild(linkElement);
+      }
+    }
+
+    // Adiciona evento ao botão de gerar códigos
+    document.getElementById('generateBtn').addEventListener('click', generateSpotifyCodes);
+  </script>
+</body>
+  </html>
+  
