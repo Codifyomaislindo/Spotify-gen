@@ -85,6 +85,22 @@
       margin-bottom: 5px;
     }
 
+    #copyBtn {
+      display: none;
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #1db954;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    #copyBtn:hover {
+      background-color: #14833b;
+    }
+
     footer {
       margin-top: 20px;
       font-size: 0.9rem;
@@ -111,6 +127,7 @@
     <div class="output-container">
       <h2>Códigos Gerados:</h2>
       <div id="generatedLinks"></div>
+      <button id="copyBtn">Copiar Todos os Links</button>
     </div>
   </main>
 
@@ -134,9 +151,11 @@
     function generateSpotifyCodes() {
       const numCodes = document.getElementById('numCodes').value;
       const generatedLinksContainer = document.getElementById('generatedLinks');
+      const copyBtn = document.getElementById('copyBtn');
 
       // Limpa a área de resultados anteriores
       generatedLinksContainer.innerHTML = '';
+      copyBtn.style.display = 'none';
 
       if (numCodes <= 0 || isNaN(numCodes)) {
         alert('Por favor, insira um número válido.');
@@ -144,6 +163,7 @@
       }
 
       // Gera os códigos e cria as URLs
+      let allLinks = '';
       for (let i = 0; i < numCodes; i++) {
         const code = generateRandomString(10);
         const url = `https://www.spotify.com/br-pt/ppt/microsoft/?code=${code}`;
@@ -156,12 +176,28 @@
 
         // Adiciona o link à área de resultados
         generatedLinksContainer.appendChild(linkElement);
+
+        // Armazena os links para copiar depois
+        allLinks += url + '\n';
       }
+
+      // Mostra o botão de copiar após gerar os links
+      copyBtn.style.display = 'inline-block';
+
+      // Função para copiar todos os links gerados
+      copyBtn.onclick = function () {
+        const textarea = document.createElement('textarea');
+        textarea.value = allLinks;
+        document.body.appendChild(textarea);
+        textarea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textarea);
+        alert('Todos os links foram copiados!');
+      };
     }
 
     // Adiciona evento ao botão de gerar códigos
     document.getElementById('generateBtn').addEventListener('click', generateSpotifyCodes);
   </script>
 </body>
-  </html>
-  
+</html>
